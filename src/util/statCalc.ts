@@ -1,6 +1,7 @@
 /* eslint-disable no-nested-ternary */
 import { getNatureSummary } from 'pokemon-resources'
 import { NationalDex, NationalDexMax, PokemonData } from 'pokemon-species-data'
+import { PKM } from '../pkm'
 import {
   AllPKMs,
   PKMWithDVs,
@@ -11,7 +12,6 @@ import {
   SpeciesData,
 } from './interfaces'
 import { LevelUpExp } from './levelUpExp'
-import { PKM } from '../pkm'
 import { Stat } from './types'
 
 export interface PKMWithStandardStats

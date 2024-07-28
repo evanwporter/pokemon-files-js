@@ -1,4 +1,4 @@
-import { GameOfOrigin, isGameBoy, Nature } from 'pokemon-resources'
+import { GameOfOrigin, isGameBoy, Moves, Nature } from 'pokemon-resources'
 import { getGenderRatio, NationalDex } from 'pokemon-species-data'
 import Prando from 'prando'
 import { PKM } from '../pkm'
@@ -123,4 +123,71 @@ export const generatePersonalityValuePreservingAttributes = (
     newPersonalityValue = BigInt(pvBytes.getUint32(0, true))
   }
   return personalityValue
+}
+
+export const getMoveMaxPP = (moveIndex: number, format: string, ppUps = 0) => {
+  const move = Moves[moveIndex]
+  if (!move) return undefined
+  let baseMaxPP
+  switch (format) {
+    case 'PK1':
+      baseMaxPP = move.pastGenPP?.G1 ?? move.pp
+      break
+    case 'PK2':
+      baseMaxPP = move.pastGenPP?.G2 ?? move.pp
+      break
+    case 'PK3':
+    case 'COLOPKM':
+    case 'XDPKM':
+      baseMaxPP = move.pastGenPP?.G3 ?? move.pp
+      break
+    case 'PK4':
+      baseMaxPP = move.pastGenPP?.G4 ?? move.pp
+      break
+    case 'PK5':
+      baseMaxPP = move.pastGenPP?.G5 ?? move.pp
+      break
+    case 'PK6':
+      baseMaxPP = move.pastGenPP?.G6 ?? move.pp
+      break
+    case 'PK7':
+      baseMaxPP = move.pastGenPP?.SMUSUM ?? move.pp
+      break
+    case 'PB7':
+      baseMaxPP = move.pastGenPP?.LGPE ?? move.pp
+      break
+    case 'PK8':
+    case 'PB8':
+      baseMaxPP = move.pastGenPP?.G8 ?? move.pp
+      break
+    case 'PA8':
+      baseMaxPP = move.pastGenPP?.LA ?? move.pp
+      break
+    case 'PK9':
+      baseMaxPP = move.pp
+      break
+    default:
+      baseMaxPP = move.pp
+      break
+  }
+  if (baseMaxPP === 1) {
+    return baseMaxPP
+  }
+  // gameboy games add less pp for 40pp moves
+  if ((format === 'PK1' || format === 'PK2') && baseMaxPP === 40) {
+    return baseMaxPP + Math.floor(ppUps * 7)
+  }
+  return baseMaxPP + Math.floor(ppUps * (baseMaxPP / 5))
+}
+
+export const adjustMovePPBetweenFormats = (
+  destFormatMon: AllPKMFields,
+  sourceFormatMon: AllPKMFields
+) => {
+  return sourceFormatMon.moves.map((move, i) => {
+    const otherMaxPP = getMoveMaxPP(move, sourceFormatMon.format, sourceFormatMon.movePPUps[i]) ?? 0
+    const thisMaxPP = getMoveMaxPP(move, destFormatMon.format, sourceFormatMon.movePPUps[i]) ?? 0
+    const adjustedMovePP = sourceFormatMon.movePP[i] - (otherMaxPP - thisMaxPP)
+    return adjustedMovePP > 0 ? adjustedMovePP : 0
+  }) as [number, number, number, number]
 }
