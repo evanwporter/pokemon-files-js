@@ -172,8 +172,5 @@ export function filterRibbons(ribbons: string[], ribbonSets: string[][], maxRibb
     })
   }
 
-  console.log(
-    ribbons.map((ribbon) => ribbonSets.some((ribbonSet, i) => [i, ribbonSet.indexOf(ribbon)]))
-  )
   return ribbons.filter((ribbon) => ribbonSets.some((ribbonSet) => ribbonSet.includes(ribbon)))
 }

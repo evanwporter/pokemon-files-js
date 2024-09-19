@@ -104,9 +104,9 @@ export const getStatGen3Onward = (mon: PKMWithStandardStatCalc, stat: Stat, leve
     return 0
   }
   const natureSummary = getNatureSummary(mon.nature)
-  const natureMultiplier = natureSummary?.includes(`+${stat}`)
+  const natureMultiplier = natureSummary?.toLowerCase().includes(`+${stat}`)
     ? 1.1
-    : natureSummary?.includes(`-${stat}`)
+    : natureSummary?.toLowerCase().includes(`-${stat}`)
       ? 0.9
       : 1
   const baseStats = PokemonData[mon.dexNum]?.formes[mon.formeNum]?.baseStats

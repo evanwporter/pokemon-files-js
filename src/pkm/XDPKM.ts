@@ -4,7 +4,8 @@ import {
   Ball,
   Gen3ContestRibbons,
   Gen3StandardRibbons,
-  ItemToString,
+  ItemGen3FromString,
+  ItemGen3ToString,
   Languages,
   NatureToString,
 } from 'pokemon-resources'
@@ -17,7 +18,7 @@ import {
   gen3ContestRibbonsFromBytes,
   gen3ContestRibbonsToBytes,
 } from '../util/ribbonLogic'
-import { getLevelGen3Onward } from '../util/statCalc'
+import { getLevelGen3Onward, getStats } from '../util/statCalc'
 import * as stringLogic from '../util/stringConversion'
 import * as types from '../util/types'
 import {
@@ -110,7 +111,7 @@ export class XDPKM {
     } else {
       const other = arg
       this.dexNum = other.dexNum
-      this.heldItemIndex = other.heldItemIndex
+      this.heldItemIndex = ItemGen3FromString(other.heldItemName)
       this.currentHP = other.currentHP
       this.trainerFriendship = other.trainerFriendship ?? 0
       this.metLocationIndex = other.metLocationIndex ?? 0
@@ -228,6 +229,10 @@ export class XDPKM {
     return buffer
   }
 
+  public getStats() {
+    return getStats(this)
+  }
+
   public get gender() {
     return genderFromPID(this.personalityValue, this.dexNum)
   }
@@ -235,9 +240,8 @@ export class XDPKM {
   public get language() {
     return Languages[this.languageIndex]
   }
-
   public get heldItemName() {
-    return ItemToString(this.heldItemIndex)
+    return ItemGen3ToString(this.heldItemIndex)
   }
 
   public get nature() {

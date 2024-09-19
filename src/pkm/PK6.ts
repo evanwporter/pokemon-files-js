@@ -2,6 +2,7 @@
 import {
   AbilityToString,
   Ball,
+  ItemFromString,
   ItemToString,
   Languages,
   ModernRibbons,
@@ -11,7 +12,7 @@ import * as byteLogic from '../util/byteLogic'
 import * as encryption from '../util/encryption'
 import { AllPKMFields } from '../util/pkmInterface'
 import { filterRibbons } from '../util/ribbonLogic'
-import { getLevelGen3Onward } from '../util/statCalc'
+import { getLevelGen3Onward, getStats } from '../util/statCalc'
 import * as stringLogic from '../util/stringConversion'
 import * as types from '../util/types'
 import { adjustMovePPBetweenFormats } from '../util/util'
@@ -202,7 +203,7 @@ export class PK6 {
       this.sanity = other.sanity ?? 0
       this.checksum = other.checksum ?? 0
       this.dexNum = other.dexNum
-      this.heldItemIndex = other.heldItemIndex
+      this.heldItemIndex = ItemFromString(other.heldItemName)
       this.trainerID = other.trainerID
       this.secretID = other.secretID
       this.exp = other.exp
@@ -440,6 +441,10 @@ export class PK6 {
     return buffer
   }
 
+  public getStats() {
+    return getStats(this)
+  }
+
   public get language() {
     return Languages[this.languageIndex]
   }
@@ -447,7 +452,6 @@ export class PK6 {
   public get abilityName() {
     return AbilityToString(this.abilityIndex)
   }
-
   public get heldItemName() {
     return ItemToString(this.heldItemIndex)
   }

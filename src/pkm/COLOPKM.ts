@@ -4,7 +4,8 @@ import {
   Ball,
   Gen3ContestRibbons,
   Gen3StandardRibbons,
-  ItemToString,
+  ItemGen3FromString,
+  ItemGen3ToString,
   Languages,
   NatureToString,
 } from 'pokemon-resources'
@@ -17,7 +18,7 @@ import {
   gen3ContestRibbonsFromBytes,
   gen3ContestRibbonsToBytes,
 } from '../util/ribbonLogic'
-import { getLevelGen3Onward } from '../util/statCalc'
+import { getLevelGen3Onward, getStats } from '../util/statCalc'
 import * as stringLogic from '../util/stringConversion'
 import * as types from '../util/types'
 import {
@@ -135,7 +136,7 @@ export class COLOPKM {
         (_, i) => other.moves[i] <= COLOPKM.maxValidMove()
       )
       this.movePPUps = other.movePPUps.filter((_, i) => other.moves[i] <= COLOPKM.maxValidMove())
-      this.heldItemIndex = other.heldItemIndex
+      this.heldItemIndex = ItemGen3FromString(other.heldItemName)
       this.currentHP = other.currentHP
       this.evs = other.evs ?? {
         hp: 0,
@@ -231,6 +232,10 @@ export class COLOPKM {
     return buffer
   }
 
+  public getStats() {
+    return getStats(this)
+  }
+
   public get gender() {
     return genderFromPID(this.personalityValue, this.dexNum)
   }
@@ -238,9 +243,8 @@ export class COLOPKM {
   public get language() {
     return Languages[this.languageIndex]
   }
-
   public get heldItemName() {
-    return ItemToString(this.heldItemIndex)
+    return ItemGen3ToString(this.heldItemIndex)
   }
 
   public get nature() {

@@ -3,126 +3,125 @@ import * as types from './types'
 
 export interface AllPKMFields {
   format: string
-  level?: number
-  type2?: number
-  exp: number
-  metLocationIndex?: number
-  trainerAffection?: number
-  statLevel?: number
-  shadowGauge?: number
-  evsG12?: types.StatsPreSplit
-  canGigantamax?: boolean
-  alphaMove?: number
-  teraTypeOverride?: number
-  languageIndex: number
-  moves: number[]
-  trainerGender: boolean
+  trainerFriendship?: number
   sanity?: number
-  superTrainingDistFlags?: number
-  handlerMemory?: types.Memory
-  consoleRegion?: number
-  avs?: types.Stats
-  nickname: string
-  abilityIndex?: number
+  geolocations?: types.Geolocation[]
+  gvs?: types.Stats
+  contest?: types.ContestStats
+  secretSuperTrainingComplete?: boolean
+  handlerGender?: boolean
+  weight?: number
+  dynamaxLevel?: number
+  ivs?: types.Stats
   nature?: number
+  trainerMemory?: types.Memory
+  fieldEventFatigue1?: number
+  obedienceLevel?: number
+  shadowID?: number
+  unknownF3?: number
+  masterFlagsLA?: ArrayBuffer
+  type2?: number
+  trainerGender: boolean
+  trainingBag?: number
+  fullness?: number
+  statNature?: number
   handlerName?: string
   sociability?: number
-  tmFlagsSV?: ArrayBuffer
-  personalityValue?: number
-  isFatefulEncounter?: boolean
-  pokeStarFame?: number
-  hyperTraining?: types.HyperTrainStats
-  tmFlagsSVDLC?: ArrayBuffer
-  statusCondition?: number
-  pokerusByte?: number
-  formeNum: number
-  trainingBagHits?: number
-  palma?: number
-  flag2LA?: boolean
-  trFlagsSwSh?: ArrayBuffer
-  trainerFriendship?: number
-  secretSuperTrainingUnlocked?: boolean
-  dynamaxLevel?: number
-  isAlpha?: boolean
-  evs?: types.Stats
-  ball?: number
-  abilityNum?: number
-  fieldEventFatigue2?: number
-  statNature?: number
-  gameOfOriginBattle?: number
-  homeTracker?: ArrayBuffer
-  obedienceLevel?: number
-  currentHP: number
-  encryptionConstant?: number
-  trainingBag?: number
-  contestMemoryCount?: number
-  handlerAffection?: number
-  isNicknamed?: boolean
-  encounterType?: number
-  resortEventStatus?: number
-  enjoyment?: number
-  contest?: types.ContestStats
-  metDate?: types.PKMDate | undefined
-  gameOfOrigin: number
-  eggLocationIndex?: number
-  relearnMoves?: number[]
-  dexNum: number
-  type1?: number
-  secretSuperTrainingComplete?: boolean
-  height?: number
-  fieldEventFatigue1?: number
-  ivs?: types.Stats
-  checksum?: number
-  performance?: number
-  gender?: number
-  favorite?: boolean
-  scale?: number
-  movePP: number[]
-  ribbonBytes?: ArrayBuffer
-  formArgument?: number
-  isCurrentHandler?: boolean
-  geolocations?: types.Geolocation[]
-  formNum?: number
-  tmFlagsBDSP?: ArrayBuffer
-  heldItemIndex: number
-  shinyLeaves?: number
+  evsG12?: types.StatsPreSplit
+  trainerName: string
+  nickname: string
+  abilityIndex?: number
   superTrainingFlags?: number
-  masterFlagsLA?: ArrayBuffer
   isNsPokemon?: boolean
-  handlerID?: number
-  battleMemoryCount?: number
-  handlerFriendship?: number
-  fullness?: number
-  country?: number
-  gvs?: types.Stats
-  movePPUps: number[]
-  metLocationIndexPtHGSS?: number
-  handlerLanguage?: number
-  affixedRibbon?: number
-  unknownA0?: number
-  tutorFlagsLA?: ArrayBuffer
-  shadowID?: number
+  teraTypeOriginal?: number
+  moves: number[]
   eggDate?: types.PKMDate | undefined
-  handlerGender?: boolean
-  isNoble?: boolean
+  hyperTraining?: types.HyperTrainStats
+  handlerLanguage?: number
+  consoleRegion?: number
+  isAlpha?: boolean
   trainerID: number
-  isEgg?: boolean
-  dvs?: types.StatsPreSplit
+  shinyLeaves?: number
+  abilityNum?: number
+  handlerAffection?: number
+  country?: number
+  region?: number
+  canGigantamax?: boolean
+  flag2LA?: boolean
+  languageIndex: number
+  currentHP: number
+  avs?: types.Stats
+  tmFlagsSV?: ArrayBuffer
+  encryptionConstant?: number
+  trFlagsSwSh?: ArrayBuffer
+  isNoble?: boolean
+  movePPUps: number[]
   metTimeOfDay?: number
+  isEgg?: boolean
+  superTrainingDistFlags?: number
+  gameOfOriginBattle?: number
+  dvs?: types.StatsPreSplit
   markings?:
     | types.MarkingsFourShapes
     | types.MarkingsSixShapesNoColor
     | types.MarkingsSixShapesWithColor
-  secretID: number
-  region?: number
-  metLevel?: number
+  encounterType?: number
+  handlerFriendship?: number
+  isFatefulEncounter?: boolean
   ribbons?: string[]
-  trainerMemory?: types.Memory
-  weight?: number
-  unknownF3?: number
+  unknownA0?: number
+  secretID: number
+  evs?: types.Stats
+  relearnMoves?: number[]
+  statusCondition?: number
+  secretSuperTrainingUnlocked?: boolean
+  favorite?: boolean
+  handlerID?: number
+  ball?: number
+  isNicknamed?: boolean
+  formeNum: number
+  battleMemoryCount?: number
+  palma?: number
+  pokerusByte?: number
+  trainerAffection?: number
+  alphaMove?: number
+  tmFlagsBDSP?: ArrayBuffer
+  statLevel?: number
+  trainingBagHits?: number
+  isCurrentHandler?: boolean
+  affixedRibbon?: number
+  heldItemIndex: number
   moveFlagsLA?: ArrayBuffer
-  trainerName: string
-  teraTypeOriginal?: number
+  metDate?: types.PKMDate | undefined
+  eggLocationIndex?: number
+  contestMemoryCount?: number
+  handlerMemory?: types.Memory
+  height?: number
+  personalityValue?: number
+  level?: number
+  enjoyment?: number
+  movePP: number[]
+  metLocationIndex?: number
+  formArgument?: number
+  resortEventStatus?: number
+  tmFlagsSVDLC?: ArrayBuffer
+  ribbonBytes?: ArrayBuffer
+  performance?: number
+  teraTypeOverride?: number
+  gender?: number
+  pokeStarFame?: number
+  fieldEventFatigue2?: number
+  scale?: number
+  gameOfOrigin: number
+  exp: number
+  metLocationIndexPtHGSS?: number
+  tutorFlagsLA?: ArrayBuffer
+  homeTracker?: ArrayBuffer
+  dexNum: number
+  type1?: number
+  metLevel?: number
+  checksum?: number
+  shadowGauge?: number
   heldItemName: string
   language: string
   getLevel: () => number

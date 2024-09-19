@@ -3,6 +3,7 @@ import {
   AbilityToString,
   Ball,
   Gen4Ribbons,
+  ItemFromString,
   ItemToString,
   Languages,
   NatureToString,
@@ -12,7 +13,7 @@ import * as encryption from '../util/encryption'
 import { genderFromPID } from '../util/genderCalc'
 import { AllPKMFields } from '../util/pkmInterface'
 import { filterRibbons } from '../util/ribbonLogic'
-import { getLevelGen3Onward } from '../util/statCalc'
+import { getLevelGen3Onward, getStats } from '../util/statCalc'
 import * as stringLogic from '../util/stringConversion'
 import * as types from '../util/types'
 import {
@@ -145,7 +146,7 @@ export class PK4 {
       const other = arg
       this.personalityValue = generatePersonalityValuePreservingAttributes(other) ?? 0
       this.dexNum = other.dexNum
-      this.heldItemIndex = other.heldItemIndex
+      this.heldItemIndex = ItemFromString(other.heldItemName)
       this.trainerID = other.trainerID
       this.secretID = other.secretID
       this.exp = other.exp
@@ -310,6 +311,10 @@ export class PK4 {
     return buffer
   }
 
+  public getStats() {
+    return getStats(this)
+  }
+
   public get gender() {
     return genderFromPID(this.personalityValue, this.dexNum)
   }
@@ -321,7 +326,6 @@ export class PK4 {
   public get abilityName() {
     return AbilityToString(this.abilityIndex)
   }
-
   public get heldItemName() {
     return ItemToString(this.heldItemIndex)
   }
