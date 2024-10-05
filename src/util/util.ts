@@ -20,8 +20,8 @@ export function getDisplayID(pokemon: PKM): string {
     return pokemon.trainerID.toString().padStart(5, '0')
   }
 
-  const fullTrainerID = (pokemon.trainerID << 32) | pokemon.secretID
-  return (fullTrainerID % 1000000).toString().padStart(6, '0')
+  const fullTrainerID = (BigInt(pokemon.secretID) << BigInt(16)) | BigInt(pokemon.trainerID)
+  return (fullTrainerID % BigInt(1000000)).toString().padStart(6, '0')
 }
 
 const gen3To5MaleThreshold: { [key: number]: number } = {
