@@ -1,4 +1,4 @@
-VERSION=0.3.0
+VERSION=0.3.1
 
 .PHONY: help
 help: # Display this help.
@@ -12,6 +12,7 @@ lint: # Lint typescript files
 .PHONY: set-version
 set-version: # Update package version
 	@npm version $(VERSION) --no-git-tag-version --allow-same-version
+	@npm run build
 
 .PHONY: test
 test: # Run jest tests
