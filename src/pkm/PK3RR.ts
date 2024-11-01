@@ -330,10 +330,8 @@ export class PK3RR {
   }
 
   toPCBytes() {
-    const buffer = new ArrayBuffer(58);
-    const shuffledBytes = shuffleBlocksGen3(buffer);
-    return decryptByteArrayGen3(shuffledBytes);
- }
+    return this.toBytes();
+  }
   public getLevel() {
     return getLevelGen3Onward(this.dexNum, this.exp)
   }
