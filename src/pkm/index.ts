@@ -6,6 +6,7 @@ import PB8 from './PB8'
 import PK1 from './PK1'
 import PK2 from './PK2'
 import PK3 from './PK3'
+import PK3RR from './PK3RR'
 import PK4 from './PK4'
 import PK5 from './PK5'
 import PK6 from './PK6'
@@ -15,12 +16,14 @@ import PK9 from './PK9'
 import XDPKM from './XDPKM'
 
 export * from './COLOPKM'
+export * from './fileImport'
 export * from './PA8'
 export * from './PB7'
 export * from './PB8'
 export * from './PK1'
 export * from './PK2'
 export * from './PK3'
+export * from './PK3RR'
 export * from './PK4'
 export * from './PK5'
 export * from './PK6'
@@ -28,12 +31,12 @@ export * from './PK7'
 export * from './PK8'
 export * from './PK9'
 export * from './XDPKM'
-export * from './fileImport'
 
 export type PKM =
   | PK1
   | PK2
   | PK3
+  | PK3RR
   | COLOPKM
   | XDPKM
   | PK4
@@ -45,10 +48,12 @@ export type PKM =
   | PA8
   | PB8
   | PK9
+
 export type PKMType =
   | typeof PK1
   | typeof PK2
   | typeof PK3
+  | typeof PK3RR
   | typeof COLOPKM
   | typeof XDPKM
   | typeof PK4
