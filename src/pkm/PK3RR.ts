@@ -2,18 +2,16 @@
 import {
   AbilityFromString,
   Ball,
-  ItemGen3FromString,
-  ItemGen3ToString,
   Languages,
   NatureToString,
 } from 'pokemon-resources'
+import {
+  ItemGen3RRToString,
+  ItemGen3RRFromString
+} from './RR-Items'
 import { NationalDex, PokemonData } from 'pokemon-species-data'
 import * as conversion from '../conversion'
 import * as byteLogic from '../util/byteLogic'
-import { 
-  shuffleBlocksGen3,
-  decryptByteArrayGen3 
-} from '../util/encryption'
 import { genderFromPID } from '../util/genderCalc'
 import { AllPKMFields } from '../util/pkmInterface'
 
@@ -21,7 +19,6 @@ import { getLevelGen3Onward, getStats } from '../util/statCalc'
 import * as stringLogic from '../util/stringConversion'
 import * as types from '../util/types'
 import {
-  adjustMovePPBetweenFormats,
   generatePersonalityValuePreservingAttributes,
 } from '../util/util'
 
@@ -36,9 +33,9 @@ export class PK3RR {
   heldItemIndex: number
   exp: number
   movePPUps: number[]
+  movePP: number[] = []
   trainerFriendship: number
   moves: number[]
-  movePP: number[]
   evs: types.Stats
   pokerusByte: number
   metLocationIndex: number
@@ -83,7 +80,7 @@ export class PK3RR {
       this.markings = types.markingsFourShapesFromBytes(dataView, 0x1b)
       
       // Species 28:30 !!!
-      this.dexNum = conversion.fromGen3PokemonIndex(dataView.getUint16(0x1c, true))
+      this.dexNum = conversion.fromGen3RRPokemonIndex(dataView.getUint16(0x1c, true))
       
       // Held Item 30:32
       this.heldItemIndex = dataView.getUint16(0x1e, true)
@@ -103,29 +100,15 @@ export class PK3RR {
       this.trainerFriendship = dataView.getUint8(0x25)
 
       // Pokeball 38
-      this.ball = 0 // byteLogic.uIntFromBufferBits(dataView, 0x26, 11, 4, true)
+      this.ball = byteLogic.uIntFromBufferBits(dataView, 0x26, 11, 4, true)
 
-      // // Moves 38:43 (5 bytes total for 4 moves with 10 bits each)
-      // this.moves = [
-      //   byteLogic.uIntFromBufferBits(dataView, 0x27, 0, 10, true), // Move 1
-      //   byteLogic.uIntFromBufferBits(dataView, 0x27, 10, 10, true), // Move 2
-      //   byteLogic.uIntFromBufferBits(dataView, 0x27, 20, 10, true), // Move 3
-      //   byteLogic.uIntFromBufferBits(dataView, 0x27, 30, 10, true), // Move 4
-      // ]
-
-      // Moves
+      // Moves 38:43 (5 bytes total for 4 moves with 10 bits each)
       this.moves = [
-        // dataView.getUint16(0x2c, true),
-        // dataView.getUint16(0x2e, true),
-        // dataView.getUint16(0x30, true),
-        // dataView.getUint16(0x32, true),
-      ]
-      this.movePP = [
-        // dataView.getUint8(0x34),
-        // dataView.getUint8(0x35),
-        // dataView.getUint8(0x36),
-        // dataView.getUint8(0x37),
-      ]
+        byteLogic.uIntFromBufferBits(dataView, 0x27, 0, 10, true), // Move 1
+        byteLogic.uIntFromBufferBits(dataView, 0x28, 2, 10, true), // Move 2
+        byteLogic.uIntFromBufferBits(dataView, 0x29, 4, 10, true), // Move 3
+        byteLogic.uIntFromBufferBits(dataView, 0x2A, 6, 10, true)  // Move 4
+      ];
 
       // EVs 43:49
       this.evs = types.readStatsFromBytes(dataView, 0x2b)
@@ -159,14 +142,12 @@ export class PK3RR {
         heart: false,
       }
       this.dexNum = other.dexNum
-      this.heldItemIndex = ItemGen3FromString(other.heldItemName)
+      this.heldItemIndex = ItemGen3RRFromString(other.heldItemName)
       this.exp = other.exp
       this.movePPUps = other.movePPUps.filter((_, i) => other.moves[i] <= PK3RR.maxValidMove())
       this.trainerFriendship = other.trainerFriendship ?? 0
       this.moves = other.moves.filter((_, i) => other.moves[i] <= PK3RR.maxValidMove())
-      this.movePP = adjustMovePPBetweenFormats(this, other).filter(
-        (_, i) => other.moves[i] <= PK3RR.maxValidMove()
-      )
+
       this.evs = other.evs ?? {
         hp: 0,
         atk: 0,
@@ -290,7 +271,7 @@ export class PK3RR {
     return Languages[this.languageIndex]
   }
   public get heldItemName() {
-    return ItemGen3ToString(this.heldItemIndex)
+    return ItemGen3RRToString(this.heldItemIndex)
   }
 
   public get nature() {
@@ -330,10 +311,9 @@ export class PK3RR {
   }
 
   toPCBytes() {
-    const buffer = new ArrayBuffer(58);
-    const shuffledBytes = shuffleBlocksGen3(buffer);
-    return decryptByteArrayGen3(shuffledBytes);
- }
+    return this.toBytes();
+  }
+
   public getLevel() {
     return getLevelGen3Onward(this.dexNum, this.exp)
   }
