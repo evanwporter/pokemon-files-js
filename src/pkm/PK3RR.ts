@@ -120,8 +120,11 @@ export class PK3RR {
 
       // 51:53
       this.metLevel = byteLogic.uIntFromBufferBits(dataView, 0x33, 0, 7, true)
-      this.gameOfOrigin = byteLogic.uIntFromBufferBits(dataView, 0x33, 7, 4, true)
+      // More research must be done into how the Game of orgigin is stored
+      const gor = byteLogic.uIntFromBufferBits(dataView, 0x33, 7, 4, true)
+      this.gameOfOrigin = (gor === 8 || gor === 0) ? 6 : gor // Radical Red uses the 8 to represent pokemon from Radical Red
       this.trainerGender = byteLogic.getFlag(dataView, 0x33, 15)
+
 
       // 53:57
       this.ivs = types.read30BitIVsFromBytes(dataView, 0x35)
