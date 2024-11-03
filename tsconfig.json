@@ -2,7 +2,7 @@
   "compilerOptions": {
     "module": "commonjs",
     "outDir": "out",
-    "rootDir": ".",
+    "rootDir": "..",
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
     "strict": true,
