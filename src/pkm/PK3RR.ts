@@ -7,7 +7,7 @@ import {
 import {
   ItemGen3RRToString,
   ItemGen3RRFromString
-} from './RR-Items'
+} from '../conversion/RR-Items'
 import { NationalDex, PokemonData } from 'pokemon-species-data'
 import * as conversion from '../conversion'
 import * as byteLogic from '../util/byteLogic'
