@@ -1379,12 +1379,12 @@ const Gen3RRSpecies = [
 ]
 
 const normalizeName = (name: string): string => {
-    return name.replace(/[.-]/g, '').replace(/\s/g, '').toLowerCase();
+    return name.replace(/[.-]/g, '').replace(/\s/g, '');
 };
 
 export function fromGen3RRPokemonIndex(speciesIndex: number): number {
     if (speciesIndex < 0 || speciesIndex >= Gen3RRSpecies.length) {
-        return -1;
+        return -2;
     }
 
     const speciesName = normalizeName(Gen3RRSpecies[speciesIndex]);
@@ -1396,7 +1396,7 @@ export function fromGen3RRPokemonIndex(speciesIndex: number): number {
         }
     });
 
-    return nationalDexMap.get(speciesName) ?? -1;
+    return (nationalDexMap.get(speciesName) ?? 0) - 1;
 }
 
 export function toGen3RRPokemonIndex(nationalDexIndex: number): number {

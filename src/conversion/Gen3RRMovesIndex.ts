@@ -1002,33 +1002,38 @@ export const Gen3RRMoves = [
     "One Blow",
 ]
 
-import Moves from '../../../pokemon-resources-js/src/moves/moves.json';
+// import { Moves } from '../../../pokemon-resources-js/src/index';
+const moves = require('./moves.json') as { name: string; id: number }[];
 
-const normalizeName = (name: string): string => {
-    return name.replace(/[.-]/g, '').replace(/\s/g, '').toLowerCase();
-};
-
-const moveMap = new Map<string, number>();
-Object.values(Moves).forEach((move) => {
-    moveMap.set(normalizeName(move.name), move.id);
-});
 
 export function fromGen3RRMoveIndex(moveIndex: number): number {
     if (moveIndex < 0 || moveIndex >= Gen3RRMoves.length) {
-        return -1;
+        return -2;
     }
-    const moveName = normalizeName(Gen3RRMoves[moveIndex]);
-    return moveMap.get(moveName) ?? -1;
+    
+    const moveName = Gen3RRMoves[moveIndex];
+
+    if (!moves) {
+        return -3
+    }
+
+    for (const move of Object.values(moves || {})) {
+        if (move.name === moveName) {
+            return move.id - 1;
+        }
+    }
+
+    return -1;
 }
 
 export function toGen3RRMoveIndex(moveId: number): number {
-    const moveEntry = Object.values(Moves).find(move => move.id === moveId);
-    if (!moveEntry) return -1;
+    const moveEntry = Object.values(moves || {}).find(move => move.id === moveId);
+    if (!moveEntry) return -2;
 
-    const moveName = normalizeName(moveEntry.name);
+    const moveName = moveEntry.name;
 
     for (let i = 0; i < Gen3RRMoves.length; i++) {
-        if (normalizeName(Gen3RRMoves[i]) === moveName) {
+        if (Gen3RRMoves[i] === moveName) {
             return i;
         }
     }

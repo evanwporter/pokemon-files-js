@@ -78,7 +78,7 @@ export class PK3RR {
       // Markings 27
       this.markings = types.markingsFourShapesFromBytes(dataView, 0x1b)
       
-      // Species 28:30 !!!
+      // Species 28:30
       this.dexNum = conversion.fromGen3RRPokemonIndex(dataView.getUint16(0x1c, true))
       
       // Held Item 30:32
@@ -103,10 +103,10 @@ export class PK3RR {
 
       // Moves 38:43 (5 bytes total for 4 moves with 10 bits each)
       this.moves = [
-        conversion.toGen3RRMoveIndex(byteLogic.uIntFromBufferBits(dataView, 0x27, 0, 10, true)), // Move 1
-        conversion.toGen3RRMoveIndex(byteLogic.uIntFromBufferBits(dataView, 0x28, 2, 10, true)), // Move 2
-        conversion.toGen3RRMoveIndex(byteLogic.uIntFromBufferBits(dataView, 0x29, 4, 10, true)), // Move 3
-        conversion.toGen3RRMoveIndex(byteLogic.uIntFromBufferBits(dataView, 0x2A, 6, 10, true))  // Move 4
+        conversion.fromGen3RRMoveIndex(byteLogic.uIntFromBufferBits(dataView, 0x27, 0, 10, true)), // Move 1
+        conversion.fromGen3RRMoveIndex(byteLogic.uIntFromBufferBits(dataView, 0x28, 2, 10, true)), // Move 2 // 10 bits = 1 bytes + 2 bits
+        conversion.fromGen3RRMoveIndex(byteLogic.uIntFromBufferBits(dataView, 0x29, 4, 10, true)), // Move 3 // 20 bits = 2 bytes + 4 bits
+        conversion.fromGen3RRMoveIndex(byteLogic.uIntFromBufferBits(dataView, 0x2A, 6, 10, true))  // Move 4 // 30 bits = 3 bytes + 6 bits
       ];
 
       // EVs 43:49
