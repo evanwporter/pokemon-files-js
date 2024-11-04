@@ -1002,8 +1002,7 @@ export const Gen3RRMoves = [
     "One Blow",
 ]
 
-// import { Moves } from '../../../pokemon-resources-js/src/index';
-const moves = require('./moves.json') as { name: string; id: number }[];
+import { Moves } from 'pokemon-resources'
 
 
 export function fromGen3RRMoveIndex(moveIndex: number): number {
@@ -1013,11 +1012,11 @@ export function fromGen3RRMoveIndex(moveIndex: number): number {
     
     const moveName = Gen3RRMoves[moveIndex];
 
-    if (!moves) {
+    if (!Moves) {
         return -3
     }
 
-    for (const move of Object.values(moves || {})) {
+    for (const move of Object.values(Moves || {})) {
         if (move.name === moveName) {
             return move.id - 1;
         }
@@ -1027,7 +1026,7 @@ export function fromGen3RRMoveIndex(moveIndex: number): number {
 }
 
 export function toGen3RRMoveIndex(moveId: number): number {
-    const moveEntry = Object.values(moves || {}).find(move => move.id === moveId);
+    const moveEntry = Object.values(Moves || {}).find(move => move.id === moveId);
     if (!moveEntry) return -2;
 
     const moveName = moveEntry.name;

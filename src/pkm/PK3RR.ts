@@ -250,7 +250,7 @@ export class PK3RR {
 
     // 51:52 Met Info (packed: Met level, Game of Origin, Trainer Gender)
     byteLogic.uIntToBufferBits(dataView, this.metLevel, 0x33, 0, 7, true);
-    byteLogic.uIntToBufferBits(dataView, this.gameOfOrigin, 0x33, 7, 4, true);
+    byteLogic.uIntToBufferBits(dataView, this.gameOfOrigin == 6 ? 8 : this.gameOfOrigin, 0x33, 7, 4, true);
     byteLogic.setFlag(dataView, 0x33, 15, this.trainerGender);
 
     // 53:57 IVs and Flags (30-bit IVs + 2 bits for flags)
