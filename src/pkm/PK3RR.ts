@@ -234,10 +234,10 @@ export class PK3RR {
     dataView.setUint8(0x26, this.ball);
 
     // Moves (5 bytes total for 10-bit moves)
-    byteLogic.uIntToBufferBits(dataView, this.moves[0], 0x27, 0, 10, true);
-    byteLogic.uIntToBufferBits(dataView, this.moves[1], 0x27, 10, 10, true);
-    byteLogic.uIntToBufferBits(dataView, this.moves[2], 0x27, 20, 10, true);
-    byteLogic.uIntToBufferBits(dataView, this.moves[3], 0x27, 30, 10, true);
+    byteLogic.uIntToBufferBits(dataView, conversion.toGen3RRMoveIndex(this.moves[0]), 0x27, 0, 10, true);
+    byteLogic.uIntToBufferBits(dataView, conversion.toGen3RRMoveIndex(this.moves[1]), 0x28, 2, 10, true);
+    byteLogic.uIntToBufferBits(dataView, conversion.toGen3RRMoveIndex(this.moves[2]), 0x29, 4, 10, true);
+    byteLogic.uIntToBufferBits(dataView, conversion.toGen3RRMoveIndex(this.moves[3]), 0x2A, 6, 10, true);
 
     // EVs
     types.writeStatsToBytes(dataView, 0x2b, this.evs);
