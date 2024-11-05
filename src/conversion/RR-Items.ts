@@ -754,7 +754,7 @@ export function ItemGen3RRToString(index: number): string {
     if (index < 0 || index >= Gen3RRItems.length) {
         return 'Index out of range';
     }
-    return Gen3RRItems[index];
+    return Gen3RRItems[index - 1];
 }
 
 export function ItemGen3RRFromString(itemName: string): number {
