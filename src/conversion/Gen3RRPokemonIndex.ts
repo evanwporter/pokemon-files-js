@@ -1,6 +1,5 @@
-import { NationalDex } from 'pokemon-species-data';
-
 const Gen3RRSpecies = [
+    "Egg",
     "Bulbasaur",
     "Ivysaur",
     "Venusaur",
@@ -1378,8 +1377,19 @@ const Gen3RRSpecies = [
     "Chillet"
 ]
 
+import { PokemonData, NationalDex } from 'pokemon-species-data';
+
+const formRegEx: RegExp = /(\w*)-(\w*)/
+
 const normalizeName = (name: string): string => {
-    return name.replace(/[.-]/g, '').replace(/\s/g, '');
+    const allowedTerms = ["Oh", "M", "F", "Z", "Lu", "Pao", "Chien", "Yu", "o"];
+    const [firstPart, secondPart] = name.split('-');
+    
+    if (secondPart && allowedTerms.includes(secondPart.trim())) {
+        return `${firstPart}-${secondPart.trim().replace(/\s/g, '')}`;
+    } else {
+        return firstPart.replace(/\s/g, '');
+    }
 };
 
 export function fromGen3RRPokemonIndex(speciesIndex: number): number {
@@ -1389,6 +1399,10 @@ export function fromGen3RRPokemonIndex(speciesIndex: number): number {
 
     const speciesName = normalizeName(Gen3RRSpecies[speciesIndex]);
 
+    if (speciesIndex === 1212) {
+        console.log(speciesName) // Slowbro
+    }
+
     const nationalDexMap = new Map<string, number>();
     Object.keys(NationalDex).forEach((key) => {
         if (isNaN(Number(key))) {
@@ -1396,7 +1410,7 @@ export function fromGen3RRPokemonIndex(speciesIndex: number): number {
         }
     });
 
-    return (nationalDexMap.get(speciesName) ?? 0) - 1;
+    return (nationalDexMap.get(speciesName) ?? -1);
 }
 
 export function toGen3RRPokemonIndex(nationalDexIndex: number): number {
@@ -1415,4 +1429,25 @@ export function toGen3RRPokemonIndex(nationalDexIndex: number): number {
     }
 
     return -1;
+}
+
+export function getFormeNumber(speciesIndex: number, nationalDexIndex: number): number {
+    const mon: string = Gen3RRSpecies[speciesIndex];
+    
+    if (formRegEx.test(mon)) {
+        const pokemonEntry = PokemonData[nationalDexIndex];
+        
+        if (!pokemonEntry || !pokemonEntry.formes) {
+            // console.log("EARLY EXIT: formes list is undefined or Pokemon entry does not exist");
+            return 0;
+        }
+
+        const formes = pokemonEntry.formes;
+        for (let i = 0; i < formes.length; i++) {
+            if (formes[i].formeName === mon) {
+                return i;
+            }
+        }
+    }
+    return 0;
 }

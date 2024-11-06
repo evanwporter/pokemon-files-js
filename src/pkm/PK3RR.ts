@@ -29,6 +29,7 @@ export class PK3RR {
   languageIndex: number
   markings: types.MarkingsFourShapes
   dexNum: number
+  formeNum: number
   heldItemIndex: number
   exp: number
   movePPUps: number[]
@@ -79,8 +80,15 @@ export class PK3RR {
       this.markings = types.markingsFourShapesFromBytes(dataView, 0x1b)
       
       // Species 28:30
-      this.dexNum = conversion.fromGen3RRPokemonIndex(dataView.getUint16(0x1c, true))
-      
+      const speciesIndex: number = dataView.getUint16(0x1c, true)
+      this.dexNum = conversion.fromGen3RRPokemonIndex(speciesIndex)
+      this.formeNum = conversion.getFormeNumber(speciesIndex, this.dexNum)
+
+      if (this.nickname === "Nobo") {
+        console.log(speciesIndex)
+        // console.log(conversion.getFormeNumber(speciesIndex, this.dexNum))
+      }
+
       // Held Item 30:32
       this.heldItemIndex = dataView.getUint16(0x1e, true)
 
@@ -144,6 +152,7 @@ export class PK3RR {
         heart: false,
       }
       this.dexNum = other.dexNum
+      this.formeNum = other.formeNum
       this.heldItemIndex = ItemGen3RRFromString(other.heldItemName)
       this.exp = other.exp
       this.movePPUps = other.movePPUps.filter((_, i) => other.moves[i] <= PK3RR.maxValidMove())
@@ -299,17 +308,6 @@ export class PK3RR {
 
   public get natureName() {
     return NatureToString(this.nature)
-  }
-
-  public get formeNum() {
-    if (this.dexNum === NationalDex.Unown) {
-      let letterValue = (this.personalityValue >> 24) & 0x3
-      letterValue = ((this.personalityValue >> 16) & 0x3) | (letterValue << 2)
-      letterValue = ((this.personalityValue >> 8) & 0x3) | (letterValue << 2)
-      letterValue = (this.personalityValue & 0x3) | (letterValue << 2)
-      return letterValue % 28
-    }
-    return 0
   }
 
   toPCBytes() {
