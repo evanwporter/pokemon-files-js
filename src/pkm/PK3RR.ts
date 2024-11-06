@@ -81,8 +81,9 @@ export class PK3RR {
       
       // Species 28:30
       const speciesIndex: number = dataView.getUint16(0x1c, true)
-      this.dexNum = conversion.fromGen3RRPokemonIndex(speciesIndex)
-      this.formeNum = conversion.getFormeNumber(speciesIndex, this.dexNum)
+      const ret = conversion.fromGen3RRPokemonIndex(speciesIndex)
+      this.dexNum = ret.NationalDexIndex === -1 ? ret.NationalDexIndex : 0
+      this.formeNum = ret.NationalDexIndex === -1 ? ret.FormIndex : 0
 
       if (this.nickname === "Nobo") {
         console.log(speciesIndex)
