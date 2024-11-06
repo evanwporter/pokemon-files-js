@@ -1,4 +1,4 @@
-const Gen3RRSpecies = [
+export const Gen3RRSpecies = [
     "Egg",
     "Bulbasaur",
     "Ivysaur",
@@ -1377,77 +1377,27 @@ const Gen3RRSpecies = [
     "Chillet"
 ]
 
-import { PokemonData, NationalDex } from 'pokemon-species-data';
+import { NationalDexToRadicalRedMap } from './NationalDexToRadicalRedMap'
+import { RadicalRedToNationalDexMap, RadicalRedToNationalDexEntry } from './RadicalRedToNationalDexMap';
 
-const formRegEx: RegExp = /(\w*)-(\w*)/
-
-const normalizeName = (name: string): string => {
-    const allowedTerms = ["Oh", "M", "F", "Z", "Lu", "Pao", "Chien", "Yu", "o"];
-    const [firstPart, secondPart] = name.split('-');
-    
-    if (secondPart && allowedTerms.includes(secondPart.trim())) {
-        return `${firstPart}-${secondPart.trim().replace(/\s/g, '')}`;
-    } else {
-        return firstPart.replace(/\s/g, '');
-    }
-};
-
-export function fromGen3RRPokemonIndex(speciesIndex: number): number {
-    if (speciesIndex < 0 || speciesIndex >= Gen3RRSpecies.length) {
-        return -2;
-    }
-
-    const speciesName = normalizeName(Gen3RRSpecies[speciesIndex]);
-
-    if (speciesIndex === 1212) {
-        console.log(speciesName) // Slowbro
-    }
-
-    const nationalDexMap = new Map<string, number>();
-    Object.keys(NationalDex).forEach((key) => {
-        if (isNaN(Number(key))) {
-            nationalDexMap.set(normalizeName(key), NationalDex[key as keyof typeof NationalDex]);
-        }
-    });
-
-    return (nationalDexMap.get(speciesName) ?? -1);
+export function fromGen3RRPokemonIndex(radicalRedIndex: number): RadicalRedToNationalDexEntry {
+  const entry = RadicalRedToNationalDexMap[String(radicalRedIndex)];
+  if (entry) {
+    return {
+      NationalDexIndex: entry.NationalDexIndex,
+      FormIndex: entry.FormIndex
+    };
+  } else {
+    throw new Error(`Radical Red index ${radicalRedIndex} not found.`);
+  }
 }
 
-export function toGen3RRPokemonIndex(nationalDexIndex: number): number {
-    const nationalDexMap = new Map<string, number>();
-    Object.keys(NationalDex).forEach((key) => {
-        if (isNaN(Number(key))) {
-            nationalDexMap.set(normalizeName(key), NationalDex[key as keyof typeof NationalDex]);
-        }
-    });
-
-    for (let i = 0; i < Gen3RRSpecies.length; i++) {
-        const speciesName = normalizeName(Gen3RRSpecies[i]);
-        if (nationalDexMap.get(speciesName) === nationalDexIndex) {
-            return i;
-        }
-    }
-
-    return -1;
-}
-
-export function getFormeNumber(speciesIndex: number, nationalDexIndex: number): number {
-    const mon: string = Gen3RRSpecies[speciesIndex];
-    
-    if (formRegEx.test(mon)) {
-        const pokemonEntry = PokemonData[nationalDexIndex];
-        
-        if (!pokemonEntry || !pokemonEntry.formes) {
-            // console.log("EARLY EXIT: formes list is undefined or Pokemon entry does not exist");
-            return 0;
-        }
-
-        const formes = pokemonEntry.formes;
-        for (let i = 0; i < formes.length; i++) {
-            if (formes[i].formeName === mon) {
-                return i;
-            }
-        }
-    }
-    return 0;
+export function toGen3RRPokemonIndex(nationalDexNumber: number, formIndex: number): number {
+  const key = `${nationalDexNumber}_${formIndex}`;
+  const radicalRedIndex = Number(NationalDexToRadicalRedMap[key]);
+  if (radicalRedIndex !== undefined) {
+    return radicalRedIndex;
+  } else {
+    throw new Error(`National Dex number ${nationalDexNumber} with form index ${formIndex} not found.`);
+  }
 }
