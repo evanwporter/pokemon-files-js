@@ -252,12 +252,12 @@ export class OHPKM {
       this.isNoble = other.isNoble ?? false
       this.isShadow = other.isShadow ?? false
       this.markings = types.markingsSixShapesWithColorFromOther(other.markings) ?? {
-        circle: null,
-        triangle: null,
-        square: null,
-        heart: null,
-        star: null,
-        diamond: null,
+        circle: false,
+        triangle: false,
+        square: false,
+        heart: false,
+        star: false,
+        diamond: false,
       }
       this.alphaMove = other.alphaMove ?? 0
       this.personalityValue = other.personalityValue ?? 0

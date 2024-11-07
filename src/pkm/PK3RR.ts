@@ -82,12 +82,13 @@ export class PK3RR {
       // Species 28:30
       const speciesIndex: number = dataView.getUint16(0x1c, true)
       const ret = conversion.fromGen3RRPokemonIndex(speciesIndex)
-      this.dexNum = ret.NationalDexIndex != -1 ? ret.NationalDexIndex : 0
-      this.formeNum = ret.NationalDexIndex != -1 ? ret.FormIndex : 0
-
-      if (this.nickname === "Nobo") {
-        console.log(speciesIndex)
-        // console.log(conversion.getFormeNumber(speciesIndex, this.dexNum))
+      if (ret.NationalDexIndex < 0) {
+        this.dexNum = 0
+        this.formeNum = 0
+        console.warn("The species is invalid. Species: ", conversion.Gen3RRSpecies[speciesIndex], ", PokeDex Number: ", speciesIndex)
+      } else {
+        this.dexNum = ret.NationalDexIndex
+        this.formeNum = ret.FormIndex
       }
 
       // Held Item 30:32

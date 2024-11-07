@@ -215,12 +215,12 @@ export class PA8 {
       this.abilityIndex = other.abilityIndex ?? 0
       this.abilityNum = other.abilityNum ?? 0
       this.markings = types.markingsSixShapesWithColorFromOther(other.markings) ?? {
-        circle: null,
-        triangle: null,
-        square: null,
-        heart: null,
-        star: null,
-        diamond: null,
+        circle: false,
+        triangle: false,
+        square: false,
+        heart: false,
+        star: false,
+        diamond: false,
       }
       this.personalityValue = other.personalityValue ?? 0
       this.nature = other.nature ?? 0
