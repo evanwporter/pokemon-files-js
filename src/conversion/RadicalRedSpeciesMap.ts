@@ -5509,3 +5509,16 @@ export const RadicalRedToNationalDexMap: Record<string, RadicalRedToNationalDexE
     "FormIndex": -1
   }
 };
+
+export const NationalDexToRadicalRedMap: Record<string, string> = {};
+
+for (const key in RadicalRedToNationalDexMap) {
+  const entry = RadicalRedToNationalDexMap[key];
+  const newKey = `${entry.NationalDexIndex}_${entry.FormIndex}`;
+  
+  if (entry.NationalDexIndex === -1) continue;
+  
+  if (!(newKey in NationalDexToRadicalRedMap)) {
+    NationalDexToRadicalRedMap[newKey] = key;
+  }
+}
