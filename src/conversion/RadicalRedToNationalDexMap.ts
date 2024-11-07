@@ -2993,20 +2993,20 @@ export const RadicalRedToNationalDexMap: Record<string, RadicalRedToNationalDexE
     "FormIndex": 1
   },
   "747": {
-    "NationalDexIndex": -1,
-    "FormIndex": -1
+    "NationalDexIndex": 1003,
+    "FormIndex": 0
   },
   "748": {
-    "NationalDexIndex": -1,
-    "FormIndex": -1
+    "NationalDexIndex": 1002,
+    "FormIndex": 0
   },
   "749": {
-    "NationalDexIndex": -1,
-    "FormIndex": -1
+    "NationalDexIndex": 1001,
+    "FormIndex": 0
   },
   "750": {
-    "NationalDexIndex": -1,
-    "FormIndex": -1
+    "NationalDexIndex": 1004,
+    "FormIndex": 0
   },
   "751": {
     "NationalDexIndex": 421,
@@ -4001,16 +4001,16 @@ export const RadicalRedToNationalDexMap: Record<string, RadicalRedToNationalDexE
     "FormIndex": 0
   },
   "999": {
-    "NationalDexIndex": -1,
-    "FormIndex": -1
+    "NationalDexIndex": 782,
+    "FormIndex": 0
   },
   "1000": {
-    "NationalDexIndex": -1,
-    "FormIndex": -1
+    "NationalDexIndex": 781,
+    "FormIndex": 0
   },
   "1001": {
-    "NationalDexIndex": -1,
-    "FormIndex": -1
+    "NationalDexIndex": 784,
+    "FormIndex": 0
   },
   "1002": {
     "NationalDexIndex": 785,
