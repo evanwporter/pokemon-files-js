@@ -16,7 +16,6 @@ import PK9 from './PK9'
 import XDPKM from './XDPKM'
 
 export * from './COLOPKM'
-export * from './fileImport'
 export * from './PA8'
 export * from './PB7'
 export * from './PB8'
@@ -31,6 +30,7 @@ export * from './PK7'
 export * from './PK8'
 export * from './PK9'
 export * from './XDPKM'
+export * from './fileImport'
 
 export type PKM =
   | PK1

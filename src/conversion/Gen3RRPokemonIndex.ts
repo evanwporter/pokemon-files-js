@@ -1,6 +1,5 @@
-import { NationalDex } from 'pokemon-species-data';
-
-const Gen3RRSpecies = [
+export const Gen3RRSpecies = [
+    "Egg",
     "Bulbasaur",
     "Ivysaur",
     "Venusaur",
@@ -1378,41 +1377,27 @@ const Gen3RRSpecies = [
     "Chillet"
 ]
 
-const normalizeName = (name: string): string => {
-    return name.replace(/[.-]/g, '').replace(/\s/g, '').toLowerCase();
-};
+import { NationalDexToRadicalRedMap } from './NationalDexToRadicalRedMap'
+import { RadicalRedToNationalDexMap, RadicalRedToNationalDexEntry } from './RadicalRedToNationalDexMap';
 
-export function fromGen3RRPokemonIndex(speciesIndex: number): number {
-    if (speciesIndex < 0 || speciesIndex >= Gen3RRSpecies.length) {
-        return -1;
-    }
-
-    const speciesName = normalizeName(Gen3RRSpecies[speciesIndex]);
-
-    const nationalDexMap = new Map<string, number>();
-    Object.keys(NationalDex).forEach((key) => {
-        if (isNaN(Number(key))) {
-            nationalDexMap.set(normalizeName(key), NationalDex[key as keyof typeof NationalDex]);
-        }
-    });
-
-    return nationalDexMap.get(speciesName) ?? -1;
+export function fromGen3RRPokemonIndex(radicalRedIndex: number): RadicalRedToNationalDexEntry {
+  const entry = RadicalRedToNationalDexMap[String(radicalRedIndex)];
+  if (entry) {
+    return {
+      NationalDexIndex: entry.NationalDexIndex,
+      FormIndex: entry.FormIndex
+    };
+  } else {
+    throw new Error(`Radical Red index ${radicalRedIndex} not found.`);
+  }
 }
 
-export function toGen3RRPokemonIndex(nationalDexIndex: number): number {
-    const nationalDexMap = new Map<string, number>();
-    Object.keys(NationalDex).forEach((key) => {
-        if (isNaN(Number(key))) {
-            nationalDexMap.set(normalizeName(key), NationalDex[key as keyof typeof NationalDex]);
-        }
-    });
-
-    for (let i = 0; i < Gen3RRSpecies.length; i++) {
-        const speciesName = normalizeName(Gen3RRSpecies[i]);
-        if (nationalDexMap.get(speciesName) === nationalDexIndex) {
-            return i;
-        }
-    }
-
-    return -1;
+export function toGen3RRPokemonIndex(nationalDexNumber: number, formIndex: number): number {
+  const key = `${nationalDexNumber}_${formIndex}`;
+  const radicalRedIndex = Number(NationalDexToRadicalRedMap[key]);
+  if (radicalRedIndex !== undefined) {
+    return radicalRedIndex;
+  } else {
+    throw new Error(`National Dex number ${nationalDexNumber} with form index ${formIndex} not found.`);
+  }
 }
