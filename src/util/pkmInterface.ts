@@ -128,4 +128,6 @@ export interface AllPKMFields {
   isShiny: () => boolean
   isSquareShiny: () => boolean
   toBytes: () => ArrayBuffer
+  isShadow?: boolean
+  formNum?: number
 }
