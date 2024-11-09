@@ -1012,10 +1012,6 @@ export function fromGen3RRMoveIndex(moveIndex: number): number {
     
     const moveName = Gen3RRMoves[moveIndex];
 
-    if (!Moves) {
-        return -3
-    }
-
     for (const move of Object.values(Moves || {})) {
         if (move.name === moveName) {
             return move.id - 1;

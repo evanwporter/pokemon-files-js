@@ -40,6 +40,7 @@ export class PK4 {
   movePPUps: number[]
   ivs: types.Stats
   isEgg: boolean
+  // eggLocationIndex: number = 0
   isNicknamed: boolean
   formeNum: number
   shinyLeaves: number

@@ -7,8 +7,8 @@ import {
 import {
   ItemGen3RRToString,
   ItemGen3RRFromString
-} from '../conversion/RR-Items'
-import { NationalDex, PokemonData } from 'pokemon-species-data'
+} from '../conversion/Gen3RRItems'
+import { PokemonData } from 'pokemon-species-data'
 import * as conversion from '../conversion'
 import * as byteLogic from '../util/byteLogic'
 import { genderFromPID } from '../util/genderCalc'
@@ -19,6 +19,7 @@ import * as stringLogic from '../util/stringConversion'
 import * as types from '../util/types'
 import {
   generatePersonalityValuePreservingAttributes,
+  getMoveMaxPP,
 } from '../util/util'
 
 export class PK3RR {
@@ -33,7 +34,7 @@ export class PK3RR {
   heldItemIndex: number
   exp: number
   movePPUps: number[]
-  movePP: number[] = []
+  movePP: number[] = [0, 0, 0, 0]
   trainerFriendship: number
   moves: number[]
   evs: types.Stats
@@ -50,7 +51,7 @@ export class PK3RR {
   trainerName: string
   trainerGender: boolean
 
-  constructor(arg: ArrayBuffer | AllPKMFields, encrypted?: boolean) {
+  constructor(arg: ArrayBuffer | AllPKMFields) {
     if (arg instanceof ArrayBuffer) {
       let buffer = arg
       const dataView = new DataView(buffer)
@@ -99,10 +100,10 @@ export class PK3RR {
       
       // Move PP Up 36
       this.movePPUps = [
-        conversion.fromGen3RRMoveIndex(byteLogic.uIntFromBufferBits(dataView, 0x24, 0, 2, true)),
-        conversion.fromGen3RRMoveIndex(byteLogic.uIntFromBufferBits(dataView, 0x24, 2, 2, true)),
-        conversion.fromGen3RRMoveIndex(byteLogic.uIntFromBufferBits(dataView, 0x24, 4, 2, true)),
-        conversion.fromGen3RRMoveIndex(byteLogic.uIntFromBufferBits(dataView, 0x24, 6, 2, true)),
+        byteLogic.uIntFromBufferBits(dataView, 0x24, 0, 2, true),
+        byteLogic.uIntFromBufferBits(dataView, 0x24, 2, 2, true),
+        byteLogic.uIntFromBufferBits(dataView, 0x24, 4, 2, true),
+        byteLogic.uIntFromBufferBits(dataView, 0x24, 6, 2, true),
       ]
 
       // Friendship 37
@@ -114,10 +115,15 @@ export class PK3RR {
       // Moves 38:43 (5 bytes total for 4 moves with 10 bits each)
       this.moves = [
         conversion.fromGen3RRMoveIndex(byteLogic.uIntFromBufferBits(dataView, 0x27, 0, 10, true)), // Move 1
-        conversion.fromGen3RRMoveIndex(byteLogic.uIntFromBufferBits(dataView, 0x28, 2, 10, true)), // Move 2 // 10 bits = 1 bytes + 2 bits
-        conversion.fromGen3RRMoveIndex(byteLogic.uIntFromBufferBits(dataView, 0x29, 4, 10, true)), // Move 3 // 20 bits = 2 bytes + 4 bits
-        conversion.fromGen3RRMoveIndex(byteLogic.uIntFromBufferBits(dataView, 0x2A, 6, 10, true))  // Move 4 // 30 bits = 3 bytes + 6 bits
-      ];
+        conversion.fromGen3RRMoveIndex(byteLogic.uIntFromBufferBits(dataView, 0x28, 2, 10, true)), // Move 2
+        conversion.fromGen3RRMoveIndex(byteLogic.uIntFromBufferBits(dataView, 0x29, 4, 10, true)), // Move 3
+        conversion.fromGen3RRMoveIndex(byteLogic.uIntFromBufferBits(dataView, 0x2A, 6, 10, true)), // Move 4
+      ]
+
+      for (let i = 0; i < 4; i++) {
+        const pp = getMoveMaxPP(this.moves[i], this.format, this.movePPUps[i])
+        if (pp) this.movePP[i] = pp
+      }
 
       // EVs 43:49
       this.evs = types.readStatsFromBytes(dataView, 0x2b)
@@ -199,7 +205,7 @@ export class PK3RR {
     return new PK3RR(buffer)
   }
 
-  toBytes(options?: types.ToBytesOptions): ArrayBuffer {
+  toBytes(): ArrayBuffer {
     const buffer = new ArrayBuffer(58); // 58 bytes as specified
     const dataView = new DataView(buffer);
 
