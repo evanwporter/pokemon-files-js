@@ -1,4 +1,5 @@
 const Gen3RRItems = [
+    "",
     "Master Ball",
     "Ultra Ball",
     "Great Ball",
@@ -754,9 +755,10 @@ export function ItemGen3RRToString(index: number): string {
     if (index < 0 || index >= Gen3RRItems.length) {
         return 'Index out of range';
     }
-    return Gen3RRItems[index - 1];
+    return Gen3RRItems[index];
 }
 
 export function ItemGen3RRFromString(itemName: string): number {
+    console.info(Gen3RRItems.findIndex(item => item === itemName) + 1)
     return Gen3RRItems.findIndex(item => item === itemName);
 }

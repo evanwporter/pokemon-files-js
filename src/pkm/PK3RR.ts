@@ -1,6 +1,7 @@
 import {
   AbilityFromString,
   Ball,
+  ItemFromString,
   Languages,
   NatureToString,
 } from 'pokemon-resources'
@@ -31,6 +32,7 @@ export class PK3RR {
   markings: types.MarkingsFourShapes
   dexNum: number
   formeNum: number
+  privateHeldItemIndex: number
   heldItemIndex: number
   exp: number
   movePPUps: number[]
@@ -93,7 +95,8 @@ export class PK3RR {
       }
 
       // Held Item 30:32
-      this.heldItemIndex = dataView.getUint16(0x1e, true)
+      this.privateHeldItemIndex = dataView.getUint16(0x1e, true)
+      this.heldItemIndex = ItemFromString(this.heldItemName)
 
       // Exp 32:36
       this.exp = dataView.getUint32(0x20, true)
@@ -161,7 +164,8 @@ export class PK3RR {
       }
       this.dexNum = other.dexNum
       this.formeNum = other.formeNum
-      this.heldItemIndex = ItemGen3RRFromString(other.heldItemName)
+      this.privateHeldItemIndex = ItemGen3RRFromString(other.heldItemName)
+      this.heldItemIndex = ItemFromString(other.heldItemName)
       this.exp = other.exp
       this.movePPUps = other.movePPUps.filter((_, i) => other.moves[i] <= PK3RR.maxValidMove())
       this.trainerFriendship = other.trainerFriendship ?? 0
@@ -236,7 +240,7 @@ export class PK3RR {
     dataView.setUint16(0x1c, conversion.toGen3PokemonIndex(this.dexNum), true);
 
     // 30:32 Held Item
-    dataView.setUint16(0x1e, this.heldItemIndex, true);
+    dataView.setUint16(0x1e, this.privateHeldItemIndex, true);
 
     // 32:36 Experience
     dataView.setUint32(0x20, this.exp, true);
@@ -290,7 +294,7 @@ export class PK3RR {
     return Languages[this.languageIndex]
   }
   public get heldItemName() {
-    return ItemGen3RRToString(this.heldItemIndex)
+    return ItemGen3RRToString(this.privateHeldItemIndex)
   }
 
   public get nature() {
