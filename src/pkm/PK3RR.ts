@@ -7,8 +7,10 @@ import {
 } from 'pokemon-resources'
 import {
   ItemGen3RRToString,
-  ItemGen3RRFromString
-} from '../conversion/Gen3RRItems'
+  ItemGen3RRFromString,
+  toGen3RRPokemonIndex,
+  fromGen3RRPokemonIndex,
+} from '../conversion'
 import { PokemonData } from 'pokemon-species-data'
 import * as conversion from '../conversion'
 import * as byteLogic from '../util/byteLogic'
@@ -84,7 +86,7 @@ export class PK3RR {
       
       // Species 28:30
       const speciesIndex: number = dataView.getUint16(0x1c, true)
-      const ret = conversion.fromGen3RRPokemonIndex(speciesIndex)
+      const ret = fromGen3RRPokemonIndex(speciesIndex)
       if (ret.NationalDexIndex < 0) {
         this.dexNum = 0
         this.formeNum = 0
@@ -237,7 +239,7 @@ export class PK3RR {
 
     // Growth Substructure (starts at 0x1C)
     // 28:30 Species (DexNum)
-    dataView.setUint16(0x1c, conversion.toGen3PokemonIndex(this.dexNum), true);
+    dataView.setUint16(0x1c, toGen3RRPokemonIndex(this.dexNum, this.formeNum), true);
 
     // 30:32 Held Item
     dataView.setUint16(0x1e, this.privateHeldItemIndex, true);

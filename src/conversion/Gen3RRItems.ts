@@ -1,5 +1,5 @@
 const Gen3RRItems = [
-    "",
+    "None",
     "Master Ball",
     "Ultra Ball",
     "Great Ball",
