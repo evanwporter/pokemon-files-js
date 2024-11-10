@@ -1,7 +1,4 @@
 import PK3 from '../PK3'; // Adjust the import path as needed
-// import { Ball, Gen3ContestRibbons, Gen3StandardRibbons } from 'pokemon-resources';
-// import { NationalDex } from 'pokemon-species-data';
-// import * as types from '../util/types'; // Adjust based on actual path
 
 describe('PK3 Class', () => {
   const buffer = new Uint8Array([
@@ -65,10 +62,6 @@ describe('PK3 Class', () => {
   test('should return correct ability based on personality', () => {
     expect(pk3Instance.ability).toBe('Synchronize');
   });
-
-  // test('should return correct ribbons', () => {
-  //   expect(pk3Instance.ribbons).toContain(Gen3StandardRibbons[0]);
-  // });
 
   test('should return correct nature', () => {
     expect(pk3Instance.nature).toBe(0x3);
