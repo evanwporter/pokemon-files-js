@@ -173,6 +173,11 @@ export class PK3RR {
       this.trainerFriendship = other.trainerFriendship ?? 0
       this.moves = other.moves.filter((_, i) => other.moves[i] <= PK3RR.maxValidMove())
 
+      for (let i = 0; i < 4; i++) {
+        const pp = getMoveMaxPP(this.moves[i], this.format, this.movePPUps[i])
+        if (pp) this.movePP[i] = pp
+      }
+
       this.evs = other.evs ?? {
         hp: 0,
         atk: 0,

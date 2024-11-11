@@ -759,6 +759,5 @@ export function ItemGen3RRToString(index: number): string {
 }
 
 export function ItemGen3RRFromString(itemName: string): number {
-    console.info(Gen3RRItems.findIndex(item => item === itemName) + 1)
     return Gen3RRItems.findIndex(item => item === itemName);
 }

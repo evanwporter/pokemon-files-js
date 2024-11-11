@@ -88,7 +88,7 @@ export const Gen3RRMoves = [
     "Thunder",
     "Rock Throw",
     "Earthquake",
-    "Soul Robbery",
+    "Soul Robbery", // RR
     "Dig",
     "Toxic",
     "Confusion",
@@ -525,7 +525,7 @@ export const Gen3RRMoves = [
     "Power Trick",
     "Psycho Shift",
     "Wring Out",
-    "King's Shield",
+    "King's Shield", // RR
     "Psystrike",
     "Autotomize",
     "Diamond Storm",
@@ -537,7 +537,7 @@ export const Gen3RRMoves = [
     "Entrainment",
     "Night Daze",
     "Echoed Voice",
-    "Land's Wrath",
+    "Land's Wrath", // RR
     "Oblivion Wing",
     "Heart Swap",
     "Aqua Fang",
@@ -658,7 +658,7 @@ export const Gen3RRMoves = [
     "Telekinesis",
     "Trick-or-Treat",
     "Venom Drench",
-    "Forest's Curse",
+    "Forest's Curse", // RR
     "Mind Blown",
     "Photon Geyser",
     "Plasma Fists",
@@ -1004,6 +1004,8 @@ export const Gen3RRMoves = [
 
 import { Moves } from 'pokemon-resources'
 
+const dne_moves = [89, 538, 526, 659]
+
 
 export function fromGen3RRMoveIndex(moveIndex: number): number {
     if (moveIndex < 0 || moveIndex >= Gen3RRMoves.length) {
@@ -1017,7 +1019,7 @@ export function fromGen3RRMoveIndex(moveIndex: number): number {
             return move.id - 1;
         }
     }
-
+    console.info("Cannot find move", Gen3RRMoves[moveIndex])
     return -1;
 }
 
