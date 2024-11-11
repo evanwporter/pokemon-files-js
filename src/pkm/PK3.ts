@@ -308,8 +308,13 @@ export class PK3 {
     }
     return 0
   }
+
+  calculateChecksum(): number {
+    return encryption.get16BitChecksumLittleEndian(this.toBytes(), 0x20, 0x50)
+  }
+
   public refreshChecksum() {
-    this.checksum = encryption.get16BitChecksumLittleEndian(this.toBytes(), 0x20, 0x50)
+    this.checksum = this.calculateChecksum()
   }
 
   public toPCBytes() {
@@ -318,6 +323,19 @@ export class PK3 {
   }
   public getLevel() {
     return getLevelGen3Onward(this.dexNum, this.exp)
+  }
+
+  // Checks to see if Pokemon is Valid and Real
+  public isValid(): boolean { 
+    if (this.calculateChecksum() !== this.checksum) {
+      return false;
+    }
+
+    if (this.dexNum !== 0) {
+      return true
+    }
+
+    return true
   }
 
   isShiny() {
@@ -338,6 +356,8 @@ export class PK3 {
       ((this.personalityValue >> 16) & 0xffff)
     )
   }
+
+  
 
   static maxValidMove() {
     return 354
