@@ -4976,23 +4976,23 @@ export const RadicalRedToNationalDexMap: Record<string, RadicalRedToNationalDexE
     "NationalDexIndex": 569,
     "FormIndex": 0
   },
-  "1243": {
+  "1243": { // Bruce Bonnet
     "NationalDexIndex": 986,
     "FormIndex": 0
   },
-  "1244": {
+  "1244": { // Sandy Shocks
     "NationalDexIndex": 989,
     "FormIndex": 0
   },
-  "1245": {
+  "1245": { // Scream Tail
     "NationalDexIndex": 985,
     "FormIndex": 0
   },
-  "1246": {
+  "1246": { // Flutter Mane
     "NationalDexIndex": 987,
     "FormIndex": 0
   },
-  "1247": {
+  "1247": { // Iron Moth
     "NationalDexIndex": 994,
     "FormIndex": 0
   },
