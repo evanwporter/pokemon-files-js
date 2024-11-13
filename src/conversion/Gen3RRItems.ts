@@ -753,8 +753,9 @@ const Gen3RRItems = [
 
 export function ItemGen3RRToString(index: number): string {
     if (index < 0 || index >= Gen3RRItems.length) {
-        return 'Index out of range';
+        return "None";
     }
+    console.log(Gen3RRItems[index])
     return Gen3RRItems[index];
 }
 
