@@ -1012,14 +1012,13 @@ export function fromGen3RRMoveIndex(moveIndex: number): number {
         return -2;
     }
     
-    const moveName = Gen3RRMoves[moveIndex];
+    const moveName = Gen3RRMoves[moveIndex - 1];
 
     for (const move of Object.values(Moves || {})) {
         if (move.name === moveName) {
-            return move.id - 1;
+            return move.id;
         }
     }
-    console.info("Cannot find move", Gen3RRMoves[moveIndex])
     return -1;
 }
 

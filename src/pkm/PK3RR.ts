@@ -10,6 +10,7 @@ import {
   ItemGen3RRFromString,
   toGen3RRPokemonIndex,
   fromGen3RRPokemonIndex,
+  Gen3RRMoves,
 } from '../conversion'
 import { PokemonData } from 'pokemon-species-data'
 import * as conversion from '../conversion'
@@ -128,6 +129,11 @@ export class PK3RR {
       for (let i = 0; i < 4; i++) {
         const pp = getMoveMaxPP(this.moves[i], this.format, this.movePPUps[i])
         if (pp) this.movePP[i] = pp
+      }
+
+      if (this.nickname === "Maroon") {
+        console.info(this.moves)
+        console.info(Gen3RRMoves[byteLogic.uIntFromBufferBits(dataView, 0x27, 0, 10, true)])
       }
 
       // EVs 43:49
