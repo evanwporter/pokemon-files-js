@@ -175,6 +175,18 @@
       "numBytes": 1
     },
     {
+      "name": "ballDPPt",
+      "type": "number",
+      "byteOffset": 131,
+      "numBytes": 1
+    },
+    {
+      "name": "ballHGSS",
+      "type": "number",
+      "byteOffset": 134,
+      "numBytes": 1
+    },
+    {
       "name": "metLevel",
       "type": "number",
       "byteOffset": 132,
@@ -207,18 +219,32 @@
       "numBytes": 1
     },
     {
-      "name": "eggLocationIndex",
+      "name": "eggLocationIndexDP",
       "type": "number",
       "numBytes": 2,
       "endian": "Little",
-      "byteOffset": 3002
+      "byteOffset": 126
     },
     {
-      "name": "metLocationIndex",
+      "name": "metLocationIndexDP",
       "type": "number",
       "numBytes": 2,
       "endian": "Little",
-      "byteOffset": 3002
+      "byteOffset": 128
+    },
+    {
+      "name": "eggLocationIndexPtHGSS",
+      "type": "number",
+      "numBytes": 2,
+      "endian": "Little",
+      "byteOffset": 68
+    },
+    {
+      "name": "metLocationIndexPtHGSS",
+      "type": "number",
+      "numBytes": 2,
+      "endian": "Little",
+      "byteOffset": 70
     },
     {
       "name": "ribbons",
@@ -269,20 +295,6 @@
       "type": "boolean",
       "byteOffset": 64,
       "bitOffset": 0
-    },
-    {
-      "name": "metLocationIndex",
-      "type": "number",
-      "byteOffset": 128,
-      "numBytes": 2,
-      "endian": "Little"
-    },
-    {
-      "name": "metLocationIndexPtHGSS",
-      "type": "number",
-      "byteOffset": 70,
-      "numBytes": 2,
-      "endian": "Little"
     },
     {
       "name": "checksum",

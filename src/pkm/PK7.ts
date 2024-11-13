@@ -456,7 +456,7 @@ export class PK7 {
     return NatureToString(this.nature)
   }
   public refreshChecksum() {
-    this.checksum = encryption.get16BitChecksumLittleEndian(this.toBytes(), 0x00, 0x00)
+    this.checksum = encryption.get16BitChecksumLittleEndian(this.toBytes(), 0x08, 0xe8)
   }
 
   public toPCBytes() {

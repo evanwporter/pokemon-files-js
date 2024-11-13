@@ -441,6 +441,8 @@
   "shinyThreshold": 16,
   "memoryType": "3DS",
   "maxValidMove": 728,
+  "checksumStart": 8,
+  "checksumEnd": 232,
   "maxRibbon": "Battle Tree Master",
   "maxBall": 26
 }
