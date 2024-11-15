@@ -124,6 +124,7 @@ export interface AllPKMFields {
   teraTypeOriginal?: number
   heldItemName: string
   language: string
+  isLocked?: boolean
   getLevel: () => number
   isShiny: () => boolean
   isSquareShiny: () => boolean
