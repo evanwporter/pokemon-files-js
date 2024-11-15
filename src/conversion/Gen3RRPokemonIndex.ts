@@ -865,8 +865,8 @@ export const Gen3RRSpecies = [
     "Finizen",
     "Palafin",
     "Palafin-Hero",
-    "Noibat-Sevii",
-    "Noivern-Sevii",
+    "Noibat-Sevii", // 866
+    "Noivern-Sevii", // 867
     "Farigiraf",
     "Venusaur-Mega",
     "Charizard-Mega-X",
@@ -1185,7 +1185,7 @@ export const Gen3RRSpecies = [
     "Kubfu",
     "Urshifu",
     "Zarude",
-    "Lokix-Sevii",
+    "Lokix-Sevii", // 1186
     "Calyrex",
     "Regieleki",
     "Regidrago",
@@ -1273,15 +1273,15 @@ export const Gen3RRSpecies = [
     "Growlithe-Hisui",
     "Arcanine-Hisui",
     "Kleavor",
-    "Blitzle-Sevii",
+    "Blitzle-Sevii", //1274
     "Zebstrika-Sevii",
     "Doduo-Sevii",
     "Dodrio-Sevii",
     "Teddiursa-Sevii",
-    "Ursaring-Sevii",
+    "Ursaring-Sevii", //1279
     "Zorua-Hisui",
     "Zoroark-Hisui",
-    "Carnivine-Sevii",
+    "Carnivine-Sevii", // 1282
     "Mantyke-Sevii",
     "Mantine-Sevii",
     "Feebas-Sevii",
@@ -1293,7 +1293,7 @@ export const Gen3RRSpecies = [
     "Centiskorch-Sevii-Mega",
     "Wishiwashi-Sevii",
     "Wishiwashi-Sevii-School",
-    "Dhelmise-Sevii",
+    "Dhelmise-Sevii", // 1294
     "Voltorb-Hisui",
     "Electrode-Hisui",
     "Sliggoo-Hisui",

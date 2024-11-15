@@ -135,4 +135,5 @@ export interface AllPKMFields {
   toBytes: () => ArrayBuffer
   isShadow?: boolean
   formNum?: number
+  isLocked?: boolean
 }
